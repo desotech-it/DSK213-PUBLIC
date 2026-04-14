@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ordered-app-postsync
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  ttlSecondsAfterFinished: 120
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: validate
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              echo "[PostSync] waiting for service ordered-app"
+              for i in 1 2 3 4 5 6 7 8 9 10; do
+                if wget -q -O- http://ordered-app.dev-demo.svc.cluster.local/ >/dev/null 2>&1; then
+                  echo "[PostSync] service is reachable"
+                  exit 0
+                fi
+                echo "[PostSync] attempt $i failed, retrying..."
+                sleep 2
+              done
+              echo "[PostSync] service is not reachable"
+              exit 1
