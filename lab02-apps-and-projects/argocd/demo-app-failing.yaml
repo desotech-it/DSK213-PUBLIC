@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/desotech-it/DSK213-PUBLIC.git
     targetRevision: main
-    path: apps/demo
+    path: lab02-apps-and-projects/apps/demo
   destination:
     server: https://kubernetes.default.svc
     namespace: prod-demo

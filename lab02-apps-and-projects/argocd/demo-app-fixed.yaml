@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-app
+  namespace: argocd
+spec:
+  project: platform-dev
+  source:
+    repoURL: https://github.com/desotech-it/DSK213-PUBLIC.git
+    targetRevision: main
+    path: lab02-apps-and-projects/apps/demo
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev-demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ordered-app-presync
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  ttlSecondsAfterFinished: 120
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: migrate
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              echo "[PreSync] starting fake migration"
+              sleep 3
+              echo "[PreSync] migration done"
