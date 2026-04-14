@@ -19,6 +19,6 @@ spec:
             - sh
             - -c
             - |
-              echo "[PreSync] starting fake migration"
-              sleep 3
-              echo "[PreSync] migration done"
+              echo "[PreSync] simulating a failing migration"
+              sleep 2
+              exit 1
