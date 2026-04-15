@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-iu
+  labels:
+    app: demo-iu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-iu
+  template:
+    metadata:
+      labels:
+        app: demo-iu
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.25-alpine
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 64Mi
