@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-kustomize
+  namespace: argocd
+spec:
+  project: platform-dev
+  source:
+    repoURL: https://github.com/desotech-it/DSK213-PUBLIC.git
+    targetRevision: main
+    path: lab05-kustomize/apps/demo-kustomize/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev-demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
