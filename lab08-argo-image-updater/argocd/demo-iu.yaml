@@ -15,6 +15,9 @@ spec:
     repoURL: https://github.com/desotech-it/DSK213-PUBLIC.git
     targetRevision: main
     path: lab08-argo-image-updater/apps/demo-iu
+    kustomize:
+      images:
+        - nginx:1.25-alpine
   destination:
     server: https://kubernetes.default.svc
     namespace: dev-iu
