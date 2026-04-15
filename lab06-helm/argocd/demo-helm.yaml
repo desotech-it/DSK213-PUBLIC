@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-helm
+  namespace: argocd
+spec:
+  project: platform-dev
+  source:
+    repoURL: https://github.com/desotech-it/DSK213-PUBLIC.git
+    targetRevision: main
+    path: lab06-helm/charts/demo-app
+    helm:
+      valueFiles:
+        - values-dev.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev-helm
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
