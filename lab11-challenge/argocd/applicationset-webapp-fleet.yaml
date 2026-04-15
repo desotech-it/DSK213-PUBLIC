@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: webapp-fleet
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - list:
+        elements:
+          - env: dev
+            namespace: challenge-dev
+            valuesFile: values-dev.yaml
+          - env: stage
+            namespace: challenge-stage
+            valuesFile: values-stage.yaml
+  template:
+    metadata:
+      name: 'webapp-{{ .env }}'
+      namespace: argocd
+    spec:
+      project: challenge-platform
+      source:
+        repoURL: https://github.com/desotech-it/DSK213-PUBLIC.git
+        targetRevision: main
+        path: lab11-challenge/charts/webapp
+        helm:
+          valueFiles:
+            - '{{ .valuesFile }}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ .namespace }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

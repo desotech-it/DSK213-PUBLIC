@@ -13,6 +13,7 @@ lab06-helm/                     demo-app Helm chart with values files
 lab07-app-of-apps-and-applicationset/  both patterns sharing the same workloads
 lab08-argo-image-updater/       demo-iu kustomize app with AIU annotations
 lab09-multicluster/             demo-fleet ApplicationSet across dev/stage/prod
+lab11-challenge/                final challenge — Helm chart + ApplicationSet + PreSync + governance
 ```
 
 Each lab folder has its own `README.md` describing what every manifest does.

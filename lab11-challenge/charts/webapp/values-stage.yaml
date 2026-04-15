@@ -1,0 +1,7 @@
+replicaCount: 2
+
+labels:
+  env: stage
+
+config:
+  greeting: "hello from stage"

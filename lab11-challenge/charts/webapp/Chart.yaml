@@ -1,0 +1,6 @@
+apiVersion: v2
+name: webapp
+description: Challenge platform webapp (nginx) with values per environment and a PreSync schema-migration hook
+type: application
+version: 0.1.0
+appVersion: "1.27"

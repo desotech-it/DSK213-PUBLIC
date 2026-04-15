@@ -1,0 +1,7 @@
+replicaCount: 1
+
+labels:
+  env: dev
+
+config:
+  greeting: "hello from dev"
