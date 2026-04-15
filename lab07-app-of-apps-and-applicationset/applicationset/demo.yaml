@@ -15,7 +15,7 @@ spec:
             path: lab07-app-of-apps-and-applicationset/apps/child-b
             namespace: dev-set-child-b
           - name: set-child-c
-            path: lab07-app-of-apps-and-applicationset/apps/child-a
+            path: lab07-app-of-apps-and-applicationset/apps/child-c
             namespace: dev-set-child-c
   template:
     metadata:
