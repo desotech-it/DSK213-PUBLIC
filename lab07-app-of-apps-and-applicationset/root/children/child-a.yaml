@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: child-a
+  namespace: argocd
+spec:
+  project: platform-meta
+  source:
+    repoURL: https://github.com/desotech-it/DSK213-PUBLIC.git
+    targetRevision: main
+    path: lab07-app-of-apps-and-applicationset/apps/child-a
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev-child-a
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

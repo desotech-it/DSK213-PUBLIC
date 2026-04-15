@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: set-demo
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - list:
+        elements:
+          - name: set-child-a
+            path: lab07-app-of-apps-and-applicationset/apps/child-a
+            namespace: dev-set-child-a
+          - name: set-child-b
+            path: lab07-app-of-apps-and-applicationset/apps/child-b
+            namespace: dev-set-child-b
+  template:
+    metadata:
+      name: '{{ .name }}'
+      namespace: argocd
+    spec:
+      project: platform-meta
+      source:
+        repoURL: https://github.com/desotech-it/DSK213-PUBLIC.git
+        targetRevision: main
+        path: '{{ .path }}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ .namespace }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

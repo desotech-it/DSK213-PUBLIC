@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: child-a
+  labels:
+    app: child-a
+spec:
+  type: ClusterIP
+  selector:
+    app: child-a
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80

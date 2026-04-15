@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: child-a
+  labels:
+    app: child-a
+    child: a
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: child-a
+  template:
+    metadata:
+      labels:
+        app: child-a
+        child: a
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 25m
+              memory: 16Mi
+            limits:
+              cpu: 100m
+              memory: 32Mi
