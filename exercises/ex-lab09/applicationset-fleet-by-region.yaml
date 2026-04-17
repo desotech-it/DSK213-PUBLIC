@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: fleet-by-region
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            region: eu-west
+  template:
+    metadata:
+      name: "fleet-{{.name}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/desotech-it/DSK213-PUBLIC.git
+        targetRevision: main
+        path: lab02-apps-and-projects/apps/demo
+      destination:
+        server: "{{.server}}"
+        namespace: dev-fleet

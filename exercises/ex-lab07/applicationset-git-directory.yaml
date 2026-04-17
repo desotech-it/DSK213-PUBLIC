@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo-git-directory
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: https://github.com/desotech-it/DSK213-PUBLIC.git
+        revision: main
+        directories:
+          - path: lab07-app-of-apps-and-applicationset/apps/*
+  template:
+    metadata:
+      name: "auto-{{.path.basename}}"
+    spec:
+      project: platform-meta
+      source:
+        repoURL: https://github.com/desotech-it/DSK213-PUBLIC.git
+        targetRevision: main
+        path: "{{.path.path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "dev-{{.path.basename}}"
+      syncPolicy:
+        automated:
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
